@@ -1,7 +1,7 @@
 package com.example.unipdlibrarytestapp;
 
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -10,7 +10,7 @@ import org.w3c.dom.Text;
 
 import java.lang.ref.WeakReference;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
