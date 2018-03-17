@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.lang.ref.WeakReference;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,11 +19,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void download(View view) {
-        new DownloadTask().execute();
+        new DownloadTask(this).execute();
     }
 
-    private class DownloadTask extends AsyncTask<Void, Void, String> {
+    private static class DownloadTask extends AsyncTask<Void, Void, String> {
+        private WeakReference<MainActivity> mainActivityWeakReference;
+        // URL to download: http://zaphod.cab.unipd.it/psico/disponibilita.txt
 
+        DownloadTask(MainActivity context) {
+            mainActivityWeakReference = new WeakReference<MainActivity>(context);
+        }
         /*@Override
         protected void onPreExecute() {
 
@@ -35,8 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            TextView textView = (TextView) findViewById(R.id.textView);
+            MainActivity mainActivity = mainActivityWeakReference.get();
+            if (mainActivity == null || mainActivity.isFinishing()) return;
+            TextView textView = (TextView) mainActivity.findViewById(R.id.textView);
             textView.setText(result);
         }
     }
 }
+
